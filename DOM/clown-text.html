@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+  .clown{
+    font-size: xxx-large;
+  }
+
+  #colorValue{
+    font-size: xxx-large;
+  }
+</style>
+
+<p id="colorValue">Цвет: red</p>
+
+<script>
+  let clownText = prompt('Над чем смеёмся сегодня?', 'Над тобой');
+
+  let clownTextElement = document.createElement('p');
+  clownTextElement.textContent = clownText;
+  clownTextElement.className = 'clown';
+  clownTextElement.style.color = 'red';
+  document.body.prepend(clownTextElement);
+
+  let colours = ['red','orange','yellow','green','lightblue','blue','purple'];
+
+
+  let colorValue = document.getElementById('colorValue');
+
+  function changeColor(element, colours){
+    let i = 0;
+    setInterval(() => {
+      if (i === colours.length) i = 0;
+      element.style.color = colours[i];
+      colorValue.textContent = 'Цвет: ' + colours[i];
+      i++;
+    }, 500)
+  }
+
+  changeColor(clownTextElement, colours);
+
+</script>
+
+
+</body>
+</html>

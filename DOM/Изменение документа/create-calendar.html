@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 3px 5px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    function createCalendar(elem, year, month){
+        let table = document.createElement('table');
+        elem.append(table);
+
+        let i = 0;
+        for (let week = 0; week < 6; week++) {
+            let tableRow = document.createElement('tr');
+            table.append(tableRow);
+
+            for (let day = 0; day < 7; day++){
+                let tableCell = document.createElement('td');
+                tableRow.append(tableCell);
+            }
+        }
+
+        for (let cell = 0; cell < table.rows[0].cells.length; cell++){
+            table.rows[0].cells[cell].textContent = weekDays[cell];
+        }
+
+        const weekDays = ['пн', 'вт', 'ср', 'чт', "пт", "сб", "вс"];
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, ++month, 0);
+        const firstWeekDay = firstDay.getDay();
+
+
+        for (let row = 1; row < table.rows.length; row++){
+            for (let cell = 0; cell < 6; cell++){
+                table.rows[row].cells[cell].textContent =
+            }
+        }
+
+        elem.append(table);
+    }
+
+    function getMonthDates(year, month){
+        const lastDay = new Date(year, month, 0).getDate();
+        let daysOfMonth = [];
+        for (let day = 1; day <= lastDay; day++) daysOfMonth.push(new Date(year, month, day));
+        return daysOfMonth;
+    }
+
+    createCalendar(document.body, 2023,2);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p style="font-size: xxx-large; color: red">Полиция</p>
+<p id="colorValue">Цвет<p/>
+
+<script>
+  let policeElement = document.body.firstElementChild;
+
+  const red = [255, 0, 0];
+  const orange = [255, 165, 0];
+  const yellow = [255, 255, 0];
+  const green = [0, 255, 0];
+  const lightblue = [39, 177, 231];
+  const blue = [0, 0, 255];
+  const purple = [255, 0, 255];
+
+  const colors = [red,orange,yellow,green,lightblue,blue,purple];
+
+  function changeElementRGBColourTo(endColor, element){
+      element.style.color = `rgb(${endColor})`;
+  }
+
+
+  async function runGradientColorChange(endColor, element) {
+
+      let currentColor = red;
+      alert(currentColor);
+
+      let interval = setInterval(() => {
+
+          for (let i = 0; i < 3; i++) {
+              if (currentColor[i] !== endColor[i]) {
+                  if (currentColor[i] > endColor[i]) currentColor[i]--;
+                  else currentColor[i]++;
+              }
+          }
+
+          changeElementRGBColourTo(currentColor, policeElement);
+          colorValue.textContent = "Цвет: " + currentColor.toString();
+          console.log(currentColor + '\n' + endColor);
+
+          if (currentColor[0] === endColor[0]
+              && currentColor[1] === endColor[1]
+              && currentColor[2] === endColor[2]) {
+              currentColor = endColor;
+              clearInterval(interval);
+          }
+
+      }, 10);
+  }
+
+  alert(runGradientColorChange(blue, policeElement));
+
+  async function runRainbowColorChange(colors, element){
+      let i = 1;
+      while (true){
+          await runGradientColorChange(colors[i]);
+          i++;
+          if (i === colors.length) i = 0;
+      }
+  }
+
+
+
+
+
+</script>
+</body>
+</html>

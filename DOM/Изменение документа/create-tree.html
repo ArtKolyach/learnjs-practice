@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <script>
+      //////////////////// Создание списка по объекту
+    let data = {
+      "Рыбы": {
+        "форель": {},
+        "лосось": {}
+      },
+
+      "Деревья": {
+        "Огромные": {
+          "секвойя": {
+              "большая":{},
+              'маленькая':{}
+          },
+          "дуб": {}
+        },
+        "Цветковые": {
+          "яблоня": {},
+          "магнолия": {}
+        }
+      },
+
+        "Животные": {}
+    };
+
+    function createTree(container, data){
+        let baseList = document.createElement('ul');
+        container.append(baseList);
+
+        for (let key in data){
+        let newListItem = document.createElement('li');
+        newListItem.textContent = key;
+
+        baseList.append(newListItem);
+
+        if (Object.keys(data[key]).length > 0){
+            createTree(newListItem, data[key]);
+        }
+
+      }
+    }
+
+    createTree(document.body, data);
+
+    /////////////////// Подсчёт вложенных элементов
+    function countChildElements(listToCount){
+        let listItems = listToCount.querySelectorAll('li');
+
+        for (let item of listItems){
+            if (item.childElementCount > 0){
+                let label = item.firstChild.textContent;
+                let childrenCountTotal = item.firstElementChild.querySelectorAll('li').length;
+                item.firstChild.textContent = `${label} [${childrenCountTotal}]`;
+            }
+        }
+    }
+
+    let list = document.body.querySelector('ul');
+
+    countChildElements(list);
+
+  </script>
+
+</body>
+</html>

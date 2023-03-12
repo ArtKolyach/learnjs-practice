@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p style="font-size: xxx-large">P</p>
+
+<script>
+
+    function delay() {
+        return new Promise(resolve => setTimeout(resolve, 300));
+    }
+
+    async function delayedLog(item) {
+        // мы можем использовать await для Promise
+        // который возвращается из delay
+        await delay();
+        console.log(item);
+    }
+
+    async function processArray(array) {
+            for (const item of array) {
+                await delayedLog(item);
+            }
+            console.log('Done!');
+    }
+
+    //////////////////////////////////////////////// Асинхронный цикл для вывода чисел
+
+    let endNumber;
+
+    function changeNumber(number){
+        console.log(++number);
+        return number;
+    }
+
+
+    async function increaseNumber(number){
+        endNumber = number + 9;
+        return new Promise(resolve => {
+            let interval = setInterval(() => {
+
+                number = changeNumber(number);
+
+                if (number === endNumber){
+                    clearInterval(interval);
+                    console.log('done');
+                    resolve(number);
+                }
+            }, 300)
+        })
+    }
+
+    async function run(){
+        await increaseNumber(0);
+        await increaseNumber(10);
+    }
+
+    async function arrayRun(numbers){
+        while (true) {
+            for (let number of numbers) {
+                console.log(number);
+                await increaseNumber(number);
+            }
+        }
+    }
+
+    //////////////////////////////////////////// Асинхронный цикл для простого изменения цвета
+
+    function changeColorTo(endColor, element){
+        element.style.color = endColor;
+    }
+
+    function shiftColor(endColor){
+
+        let currentColor;
+
+        return new Promise(resolve => {
+            let interval = setInterval(() => {
+
+                currentColor = endColor;
+                changeColorTo(endColor, document.body.firstElementChild);
+                //console.log('changed to ' + endColor);
+
+                if (currentColor === endColor){
+                    clearInterval(interval);
+                    //console.log('done');
+                    resolve(currentColor);
+                }
+            }, 300)
+        })
+    }
+
+    async function arrayColorRun(colors){
+        while (true) {
+            for (let color of colors) {
+                console.log(color);
+                await shiftColor(color);
+            }
+        }
+    }
+
+    const colors = ['red', 'blue', 'green'];
+
+
+    ////////////////////////////////////////////////// Асинхронный цикл для плавного изменения цвета
+
+
+
+    function changeElementRGBColourTo(endColor, element){
+        element.style.color = `rgb(${endColor})`;
+    }
+
+    function getCurrentColorStep(currentColor, endColor){
+        for (let i = 0; i < 3; i++) {
+            if (currentColor[i] !== endColor[i]) {
+                if (currentColor[i] > endColor[i]) currentColor[i]--;
+                else currentColor[i]++;
+            }
+        }
+
+        console.log(currentColor + '\n' + endColor);
+        return currentColor;
+    }
+
+    function gradientColorChangeTo(currentColor, endColor){
+
+        return new Promise(resolve => {
+            let interval = setInterval(() => {
+
+                if (currentColor[0] === endColor[0]
+                    && currentColor[1] === endColor[1]
+                    && currentColor[2] === endColor[2]) {
+                    clearInterval(interval);
+                    console.log('done');
+                    resolve();
+                }
+
+                let nextColor = getCurrentColorStep(currentColor, endColor);
+                changeElementRGBColourTo(nextColor, document.body.firstElementChild);
+
+            }, 10)
+        })
+    }
+
+    async function runGradientColorChange(colors){
+        while(true){
+            let i = 0;
+            for (i; i < colors.length; i++){
+                if (i === colors.length - 1) await gradientColorChangeTo(colors[i], colors[0]);
+                else await gradientColorChangeTo(colors[i], colors[i++]);
+            }
+        }
+    }
+
+    const red = [255, 0, 0];
+    const orange = [255, 165, 0];
+    const yellow = [255, 255, 0];
+
+    const gradientColors = [red,orange,yellow];
+
+    runGradientColorChange(gradientColors);
+
+</script>
+
+</body>
+</html>

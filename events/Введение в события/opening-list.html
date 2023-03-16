@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    span {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<span id="listHeader">▶ Сладости (нажми меня)!</span>
+  <ul id="listToOpen" hidden>
+    <li>Пирожное</li>
+    <li>Пончик</li>
+    <li>Мёд</li>
+  </ul>
+
+<script>
+  const listHeader = document.getElementById('listHeader');
+  const listToOpen = document.getElementById('listToOpen');
+  const openedListHeader = '▼ Сладости (нажми меня)!';
+  const closedListHeader = '▶ Сладости (нажми меня)!';
+
+  let listOptions = {
+    list: listToOpen,
+    isOpened: false,
+
+    handleEvent(event) {
+      this.list.hidden = this.isOpened;
+      this.isOpened = !this.isOpened;
+      if (this.isOpened) listHeader.textContent = openedListHeader;
+      else listHeader.textContent = closedListHeader;
+    }
+  }
+
+  listHeader.addEventListener("click", listOptions);
+
+</script>
+
+</body>
+</html>

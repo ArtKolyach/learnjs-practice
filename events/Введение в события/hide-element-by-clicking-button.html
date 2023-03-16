@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--//////////////// Спрятать другой элемент по нажатию кнопки-->
+<button id="hidingButton">Нажмите, чтобы спрятать текст</button>
+
+<div id="text">Текст</div>
+
+<script>
+  const hidingButton = document.getElementById('hidingButton');
+  const textToHide = document.getElementById('text');
+  hidingButton.addEventListener('click', () => {
+    textToHide.hidden = true;
+  })
+</script>
+
+<!--/////////////// Спрятать кнопку по нажатию-->
+
+<button onclick="this.hidden = true">Нажмите, чтобы спрятать меня</button>
+
+</body>
+</html>

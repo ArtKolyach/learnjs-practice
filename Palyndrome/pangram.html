@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  function isPangram(string){
+    for (let letter = 97; letter < 123; letter++){
+      let char = String.fromCharCode(letter);
+      if (!string.includes(char) && !string.includes(char.toUpperCase())) return false;
+    }
+    return true;
+  }
+
+  console.log(isPangram('The quick brown fox jumps over the lazy dog'));
+</script>
+</body>
+</html>
